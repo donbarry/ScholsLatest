@@ -1,0 +1,25 @@
+﻿<!--Register Modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myyModalLabel">Scholarship Finder</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-login" role="form">
+            <h2 class="form-login-heading">Register Here...</h2>
+                    <input id="username" type="text" class="form-control" placeholder="User Name" required autofocus>
+                    <input id="password" type="password" class="form-control" placeholder="Password" required>
+                    <input id="fullname" type="text" class="form-control" placeholder="Full Name" required autofocus>
+                    <input id="usermajor" type="text" class="form-control" placeholder="Major" required>
+            <div id="msg" data-ng-hide="message == ''" data-ng-class="(savedSuccessfully) ? 'alert alert-success' : 'alert alert-danger'"></div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button id="registerbutton" type="button" class="btn btn-primary" onclick="register(); ">Register</button>
+      </div>
+    </div>
+  </div>
+</div>

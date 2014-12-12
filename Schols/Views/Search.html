@@ -1,0 +1,21 @@
+﻿        <form class="form-login" role="form">
+            <h2 class="form-login-heading">Search Here...</h2>
+            <input id="title" type="text" class="form-control" placeholder="Title" autofocus>
+            <!--<input id="department" type="text" class="form-control" placeholder="Department" >-->
+            
+            <span id="loadingdeptspinner"><i class="fa fa-spinner fa-spin"></i></span>
+            <select id="department" class="form-control" ></select>
+            <!--<input id="college" type="text" class="form-control" placeholder="College" >-->
+            <select id="college" class="form-control" ></select>
+            <select id="schoolyear" class="form-control" ></select>
+            <input id="major" type="text" class="form-control" placeholder="Major" autofocus>
+            <input id="undergradGPA" type="text" class="form-control" placeholder="Undergraduate GPA" autofocus>
+            <input id="gradGPA" type="text" class="form-control" placeholder="Graduate GPA" autofocus>
+            <input id="highschoolGPA" type="text" class="form-control" placeholder="High School GPA" autofocus>
+            <input id="keyword" type="text" class="form-control" placeholder="Any Keyword..." autofocus>
+            <button id="searchbutton" class="btn btn-lg btn-primary btn-block" type="button" onclick="find();">
+                <span id="loadingspinner"><i class="fa fa-spinner fa-spin"></i></span>
+                Search!
+            </button>
+            <div id="msg" data-ng-hide="message == ''" data-ng-class="(savedSuccessfully) ? 'alert alert-success' : 'alert alert-danger'"></div>
+        </form>

@@ -1,0 +1,17 @@
+﻿<!--Login Modal -->
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="loginModalLabel">Scholarship Finder</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-login" role="form">
+            <h2 class="form-login-heading">Login Here...</h2>
+                    <input id="login_username" type="text" class="form-control" placeholder="User Name" required autofocus>
+                    <input id="login_password" type="password" class="form-control" placeholder="Password" required>
+            <div id="Div2" data-ng-hide="message == ''" data-ng-class="(savedSuccessfully) ? 'alert alert-success' : 'alert alert-danger'"></div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button id="loginbutton" type="button" class="btn btn-primary" onclick="login()">Login</button>
+      </div>
