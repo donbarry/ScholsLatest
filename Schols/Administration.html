@@ -51,6 +51,7 @@
             <table id="appstable" class="table table-condensed table-hover table-bordered">
                 <thead><tr><th>Applications</th></tr></thead>
             </table>
+                <button class="btn btn-default btn-file btn-sm" onclick="generateexcel()"><span id="tickcompleted"><i class="fa fa-check"></i></span>Generate Excel</button>
            <div id="msg"></div>
     </div>
                 </div>
@@ -88,10 +89,6 @@
                           .appendTo("#appstable");
 
                       $.each(data, function (key, item) {
-                          // Add a list item for the product.
-                          //linkurl = $('<a>', { text: item.FRML_SCHLRSHP_NAME, href: "ScholarshipPage.html?f=" + item.FUND_ACCT.trim() + "&s=" + item.SCHLRSHP_NUM.trim(), target: "_blank" }) //consider accordion
-                          //linkTD = $('<td>').append(linkurl);
-                          
                           firstname = $("<td>").append(item.firstname);
                           lastname = $("<td>").append(item.lastname);
                           middlename = $("<td>").append(item.middlename);
@@ -103,8 +100,6 @@
                           essayfilename = $("<td>").append("<a href=\"api/Upload/" + item.essayfilename + "\">Essay</a>");
                           reffilename = $("<td>").append("<a href=\"api/Upload/" + item.reffilename + "\">Reference</a>");
                           username = $("<td>").append(item.username);
-
-                          //$('<li>').append(linkurl).appendTo("#scholarship");
                           $('<tr>').append(firstname).append(lastname)
                               .append(middlename).append(email)
                               .append(phonenumber).append(address)
@@ -112,20 +107,32 @@
                               .append(essayfilename).append(reffilename)
                               .append(username)
                               .appendTo("#appstable");
-
                       });
                       console.log(data.length);
                       var num = data.length;
-                      //$("#progressbar").progressbar({ value: true });
                       $("#msg").text(num + " Found.");
-                      //$("html,body").animate({ scrollTop: $("#scholarship").offset().top - 100 });
-                      //console.log("Data: " + data + "\nStatus: " + status);
                   }
               });
       }
       $(document).ready(function () {
               find();
       });
+      function generateexcel() {
+          var accesstoken = sessionStorage.getItem("accesstoken"); // so that endpoint can know "who's searching"
+          $.ajax(
+              {
+                  url: "api/generateexcel",
+                  type: "POST",
+                  //contentType: "application/json",
+                  beforeSend: function (xhr) {
+                      xhr.setRequestHeader("Authorization", 'Bearer ' + accesstoken);
+                  },
+                  success: function (data) {
+                      $("#tickcompleted").show();
+                  }
+              });
+      }
+
   </script>
 
 

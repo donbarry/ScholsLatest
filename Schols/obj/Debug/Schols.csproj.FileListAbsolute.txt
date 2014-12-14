@@ -11,3 +11,5 @@ c:\users\donb\documents\visual studio 2012\Projects\Schols\Schols\bin\System.Web
 c:\users\donb\documents\visual studio 2012\Projects\Schols\Schols\obj\Debug\Schols.csprojResolveAssemblyReference.cache
 c:\users\donb\documents\visual studio 2012\Projects\Schols\Schols\obj\Debug\Schols.dll
 c:\users\donb\documents\visual studio 2012\Projects\Schols\Schols\obj\Debug\Schols.pdb
+C:\Users\DONB\documents\visual studio 2012\Projects\Schols\Schols\bin\EPPlus.dll
+C:\Users\DONB\documents\visual studio 2012\Projects\Schols\Schols\bin\EPPlus.xml

@@ -1,9 +1,13 @@
-﻿﻿using Oracle.ManagedDataAccess.Client;
+﻿﻿using OfficeOpenXml;
+using OfficeOpenXml.Style;
+using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Web;
@@ -395,6 +399,122 @@ namespace Schols.Models
             return ScholarshipList;
         }
 
+        public Message GenerateAppsExcel()
+        {
+            DataTable dt = GetApplicationsTable();
+            List<ScholarshipApp> applications = new List<ScholarshipApp>();
+            ScholarshipApp application;
+            string file = "";
+            using (ExcelPackage p = new ExcelPackage())
+            {
+                p.Workbook.Properties.Author = "Scholarship Finder";
+                p.Workbook.Properties.Title = "Applications List";
+                //Create a sheet
+                p.Workbook.Worksheets.Add("Sample WorkSheet");
+                ExcelWorksheet ws = p.Workbook.Worksheets[1];
+                ws.Name = "Sample Worksheet"; //Setting Sheet's name
+                ws.Cells.Style.Font.Size = 11; //Default font size for whole sheet
+                ws.Cells.Style.Font.Name = "Calibri"; //Default Font name for whole sheet
+                //Merging cells and create a center heading for out table
+                ws.Cells[1, 1].Value = "Sample DataTable Export";
+                ws.Cells[1, 1, 1, dt.Columns.Count].Merge = true;
+                ws.Cells[1, 1, 1, dt.Columns.Count].Style.Font.Bold = true;
+                ws.Cells[1, 1, 1, dt.Columns.Count].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                int colIndex = 1;
+                int rowIndex = 2;
+                foreach (DataColumn dc in dt.Columns) //Creating Headings
+                {
+                    var cell = ws.Cells[rowIndex, colIndex];
+
+                    //Setting the background color of header cells to Gray
+                    var fill = cell.Style.Fill;
+                    fill.PatternType = ExcelFillStyle.Solid;
+                    fill.BackgroundColor.SetColor(Color.Gray);
+
+
+                    //Setting Top/left,right/bottom borders.
+                    var border = cell.Style.Border;
+                    border.Bottom.Style =
+                        border.Top.Style =
+                        border.Left.Style =
+                        border.Right.Style = ExcelBorderStyle.Thin;
+
+                    //Setting Value in cell
+                    cell.Value = "Heading " + dc.ColumnName;
+
+                    colIndex++;
+                }
+                foreach (DataRow dr in dt.Rows) // Adding Data into rows
+                {
+                    colIndex = 1;
+                    rowIndex++;
+                    foreach (DataColumn dc in dt.Columns)
+                    {
+                        var cell = ws.Cells[rowIndex, colIndex];
+                        //Setting Value in cell
+                        cell.Value = dr[dc.ColumnName];//Convert.ToInt32(dr[dc.ColumnName]);
+
+                        //Setting borders of cell
+                        var border = cell.Style.Border;
+                        border.Left.Style =
+                            border.Right.Style = ExcelBorderStyle.Thin;
+                        colIndex++;
+                    }
+                }
+                /*
+                    colIndex = 0;
+                    foreach (DataColumn dc in dt.Columns) //Creating Headings
+                    {
+                        colIndex++;
+                        var cell = ws.Cells[rowIndex, colIndex];
+
+                        //Setting Sum Formula
+                        cell.Formula = "Sum(" +
+                                        ws.Cells[3, colIndex].Address +
+                                        ":" +
+                                        ws.Cells[rowIndex - 1, colIndex].Address +
+                                        ")";
+
+                        //Setting Background fill color to Gray
+                        cell.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        cell.Style.Fill.BackgroundColor.SetColor(Color.Gray);
+                    }
+                */
+                    //Generate A File with Random name
+                    Byte[] bin = p.GetAsByteArray();
+                    HttpContext httpContext = HttpContext.Current;
+                    string Serverpath = httpContext.Server.MapPath("Upload");
+                    if (!Directory.Exists(Serverpath))
+                        Directory.CreateDirectory(Serverpath);
+
+                    string fileDirectory = Serverpath;
+                    file = Guid.NewGuid().ToString() + ".xlsx";
+                    fileDirectory = Serverpath + "\\" + file;
+
+                    File.WriteAllBytes(fileDirectory, bin);
+                /*
+                    application = new ScholarshipApp();
+                    application.universityid = dt.Rows[i]["universityid"].ToString().Trim();
+                    application.firstname = dt.Rows[i]["firstname"].ToString().Trim();
+                    application.lastname = dt.Rows[i]["lastname"].ToString().Trim();
+                    application.middlename = dt.Rows[i]["middlename"].ToString().Trim();
+                    application.address = dt.Rows[i]["address"].ToString().Trim();
+                    application.phonenumber = dt.Rows[i]["phonenumber"].ToString().Trim();
+                    application.email = dt.Rows[i]["email"].ToString().Trim();
+                    application.fund_acct = dt.Rows[i]["fund_acct"].ToString().Trim();
+                    application.username = dt.Rows[i]["username"].ToString().Trim();
+                    application.essayfilename = dt.Rows[i]["essayfilename"].ToString().Trim();
+                    application.reffilename = dt.Rows[i]["reffilename"].ToString().Trim();
+                    application.scholarshipyear = dt.Rows[i]["scholarshipyear"].ToString().Trim();
+                    //System.Diagnostics.Debug.WriteLine("Row : " + i.ToString());
+                    applications.Add(application);
+                    */
+            }
+            Message message=new Message();
+            message.body="File saved " + file;
+            message.title="Successful";
+            return message;
+        }
         public List<ScholarshipApp> GetApplications()
         {
             DataTable dt = GetApplicationsTable();

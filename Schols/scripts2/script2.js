@@ -23,7 +23,7 @@ function getApplication() {
                     xhr.setRequestHeader("Authorization", 'Bearer ' + accesstoken);
                 },
                 success: function (result) {
-                    if (result.
+                    //if (result)  //TODO :::
                     $("#applicationform").hide();
                     $("#applied").show();
                     console.log(spanref);

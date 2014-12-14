@@ -186,6 +186,20 @@ namespace Schols.Controllers
             //return "{Message" + ":" + "You-accessed-this-message-with-authorization" + "}"; return Ok(headers.ToString());
             return Json(application);
         }
+        [Route("api/generateexcel")]
+        [HttpPost]
+        public IHttpActionResult GenerateAppsExcel()
+        {
+            HttpContext httpContext = HttpContext.Current;
+            NameValueCollection headerList = httpContext.Request.Headers;
+            string authorizationField = headerList.Get("Authorization");
+            authorizationField = authorizationField.Replace("Bearer ", "");
+            DBObject db = new DBObject();
+            //UserModel user = udb.CheckToken(authorizationField);
+            Message message = db.GenerateAppsExcel();
+            //return "{Message" + ":" + "You-accessed-this-message-with-authorization" + "}"; return Ok(headers.ToString());
+            return Json(message);
+        }
 
         [Route("api/fileupload")]
         [HttpPost]
