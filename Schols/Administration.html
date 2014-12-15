@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html >
 <head>
-    <title>Scholarship Seeker</title>
+    <title>Scholarship Center</title>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
 	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 	<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
@@ -53,6 +53,19 @@
             </table>
                 <button class="btn btn-default btn-file btn-sm" onclick="generateexcel()"><span id="tickcompleted"><i class="fa fa-check"></i></span>Generate Excel</button>
            <div id="msg"></div>
+                <div id="statusform">
+        <form class="form-login" role="form" id="myform">
+            <h2 class="form-login-heading">Update status here...</h2>
+            <select id="status" class="form-control" >
+                <option>Approved</option>
+                <option>Not Approved</option>
+                <option>Pending</option>
+            </select>
+            <textarea id="remark" class="form-control" placeholder="Remarkd" ></textarea>
+            <br />
+            <button id="statusbutton" class="btn btn-lg btn-primary btn-block" type="button" onclick="apply();">Apply!</button>
+        </form>
+                </div>
     </div>
                 </div>
     <hr />
